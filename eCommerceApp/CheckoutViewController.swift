@@ -13,8 +13,9 @@ class CheckoutViewController: UIViewController {
     @IBAction func doCheckoutButton(_ sender: Any) {
         let alertCheckoutDone = UIAlertController(title: "Purchase successful", message: "Come back with us", preferredStyle: .alert)
         alertCheckoutDone.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
-                self.performSegue(withIdentifier: "goToHomeWithCheckout", sender: self)
+                // implement here quit view from stack
         }))
+        
         self.present(alertCheckoutDone, animated: true, completion: nil)
         
     }

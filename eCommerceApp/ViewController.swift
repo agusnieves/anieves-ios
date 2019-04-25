@@ -74,14 +74,18 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let productCell = tableView.dequeueReusableCell(withIdentifier: "productToSale", for: indexPath) as! ProductTableViewCell
-        
         productCell.setProduct(product: products[indexPath.section][indexPath.row])
+        productCell.selectionStyle = .none
         
         return productCell
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(products[indexPath.section][indexPath.row].name)
+    }
+    
+    func printbla() {
+        print("blablabla")
     }
 }
 
