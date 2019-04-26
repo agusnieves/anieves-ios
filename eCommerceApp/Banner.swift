@@ -7,3 +7,18 @@
 //
 
 import Foundation
+import UIKit
+
+class Banner {
+    
+    var image: UIImage
+    var name: String
+    var note: String
+    
+    init(image: UIImage, name: String, note: String){
+        self.image = image
+        self.name = name
+        self.note = note
+    }
+    
+}

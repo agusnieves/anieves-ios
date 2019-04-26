@@ -30,15 +30,15 @@
                                     </scopeButtonTitles>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="productToSale" rowHeight="100" id="BjJ-H2-5IQ" customClass="ProductTableViewCell" customModule="eCommerceApp" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="productToSale" rowHeight="100" id="BjJ-H2-5IQ" customClass="ProductTableViewCell" customModule="eCommerceApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="111.33333333333334" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BjJ-H2-5IQ" id="2fA-de-wBz">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BjJ-H2-5IQ" id="2fA-de-wBz">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="99.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E9B-ug-cWO">
-                                                    <rect key="frame" x="275" y="35" width="70" height="30"/>
+                                                    <rect key="frame" x="314" y="35" width="70" height="30"/>
                                                     <color key="backgroundColor" red="0.066280270330000002" green="0.1159129733" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="OQ0-Y2-YTt"/>
@@ -48,7 +48,7 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="productAddButtonAction:" destination="BjJ-H2-5IQ" eventType="touchUpInside" id="O96-CT-OX8"/>
+                                                        <action selector="productAddButtonAction:" destination="BjJ-H2-5IQ" eventType="touchUpInside" id="64f-4k-UTO"/>
                                                     </connections>
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Avocado" translatesAutoresizingMaskIntoConstraints="NO" id="D07-11-q42">

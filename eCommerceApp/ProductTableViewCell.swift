@@ -14,9 +14,8 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productAddButton: UIButton!
-    @IBAction func productAddButtonAction(_ sender: Any) {
-        print(productTitle.text)
-    }
+    weak var delegate: ProductTableViewCellDelegate?
+    var indexPath: IndexPath?
     
     func setProduct(product: Product) {
         productImageView.image = product.image
@@ -26,7 +25,19 @@ class ProductTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
+    
+    @IBAction func productAddButtonAction(_ sender: UIButton) {
+        if let index = indexPath {
+            delegate?.productTableViewCellDidTapAdd(indexPath: index)
+        } else {
+            print("No index path")
+        }
+    }
+}
 
+protocol ProductTableViewCellDelegate : class {
+    func productTableViewCellDidTapAdd(indexPath: IndexPath)
+    func productTableViewCellDidTapPlus(_ sender: ProductTableViewCell)
+    func productTableViewCellDidTapMinus(_ sender: ProductTableViewCell)
 }

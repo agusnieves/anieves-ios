@@ -57,7 +57,8 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTableViewCellDelegate {
+    
  
     func numberOfSections(in tableView: UITableView) -> Int {
         return products.count
@@ -75,17 +76,23 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
         let productCell = tableView.dequeueReusableCell(withIdentifier: "productToSale", for: indexPath) as! ProductTableViewCell
         productCell.setProduct(product: products[indexPath.section][indexPath.row])
+        productCell.indexPath = indexPath
+        productCell.delegate = self
         productCell.selectionStyle = .none
         
         return productCell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func productTableViewCellDidTapAdd(indexPath: IndexPath) {
         print(products[indexPath.section][indexPath.row].name)
     }
     
-    func printbla() {
-        print("blablabla")
+    func productTableViewCellDidTapPlus(_ sender: ProductTableViewCell) {
+    
+    }
+    
+    func productTableViewCellDidTapMinus(_ sender: ProductTableViewCell) {
+        
     }
 }
 

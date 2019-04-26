@@ -7,3 +7,18 @@
 //
 
 import Foundation
+import UIKit
+
+class Product {
+    
+    var image: UIImage
+    var name: String
+    var price: String
+    
+    init(image: UIImage, name: String, price: String){
+        self.image = image
+        self.name = name
+        self.price = price
+    }
+
+}
