@@ -173,8 +173,7 @@
                     <navigationItem key="navigationItem" id="t6m-yt-Bwz">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="icon-cart" id="g9Q-Mm-uzg">
                             <connections>
-                                <action selector="goToCartHeader:" destination="BYZ-38-t0r" id="2i1-AA-mX5"/>
-                                <segue destination="fY9-vO-Irl" kind="show" id="5pf-Mx-yS6"/>
+                                <action selector="goToCart:" destination="BYZ-38-t0r" id="Nu4-AT-k1I"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -182,6 +181,7 @@
                         <outlet property="bannerCollectionView" destination="mW8-Fi-6b7" id="27t-yy-c5g"/>
                         <outlet property="searchBar" destination="lfZ-ev-9in" id="0f4-Hy-hnU"/>
                         <outlet property="tableView" destination="Vpm-fp-cic" id="h0K-4I-bDv"/>
+                        <segue destination="fY9-vO-Irl" kind="show" identifier="goToCartSegue" id="5oY-QY-aV2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -12,9 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bannerCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBAction func goToCartHeader(_ sender: Any) {
-        self.performSegue(withIdentifier: "GoToCartSegue", sender:  self)
-    }
+
     
     let listOfSections: [String] = ["Fruits", "Veggies"]
     var products: [[Product]] = [[]]
@@ -54,7 +52,15 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var checkoutController = segue.destination as! CheckoutViewController
+        
+    }
 
+    @IBAction func goToCart(_ sender: Any) {
+        self.performSegue(withIdentifier: "goToCartSegue", sender:  self)
+    }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTableViewCellDelegate {
@@ -96,7 +102,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
 }
 
-extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return banners.count
@@ -110,6 +116,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
         
         return bannerCell
     }
+    
+    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return
+    }*/
 }
 
 extension ViewController: UISearchResultsUpdating {
