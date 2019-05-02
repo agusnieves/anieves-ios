@@ -13,14 +13,34 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productPrice: UILabel!
+    @IBOutlet weak var productQuantity: UILabel!
     @IBOutlet weak var productAddButton: UIButton!
+    @IBOutlet weak var productPlusButton: UIButton!
+    @IBOutlet weak var productMinusButton: UIButton!
     weak var delegate: ProductTableViewCellDelegate?
     var indexPath: IndexPath?
+    var isInCart: Bool = false
+    var productId: Int?
     
     func setProduct(product: Product) {
         productImageView.image = product.image
         productTitle.text = product.name
-        productPrice.text = product.price
+        productPrice.text = "$" + String(product.price)
+        productId = product.id
+    }
+    
+    override func layoutSubviews() {
+        if(isInCart) {
+            productAddButton.isHidden = true
+            productPlusButton.isHidden = false
+            productMinusButton.isHidden = false
+            productQuantity.isHidden = false
+        } else {
+            productAddButton.isHidden = false
+            productPlusButton.isHidden = true
+            productMinusButton.isHidden = true
+            productQuantity.isHidden = true
+        }
     }
     
     override func awakeFromNib() {
@@ -29,15 +49,22 @@ class ProductTableViewCell: UITableViewCell {
     
     @IBAction func productAddButtonAction(_ sender: UIButton) {
         if let index = indexPath {
-            delegate?.productTableViewCellDidTapAdd(indexPath: index)
+            delegate?.productTableViewCellDidTapAdd(id: productId!,indexPath: index)
         } else {
             print("No index path")
         }
     }
+    @IBAction func productPlusButtonAction(_ sender: UIButton) {
+        print("Sube")
+    }
+    
+    @IBAction func productMinusButtonAction(_ sender: UIButton) {
+        print("Baja")
+    }
 }
 
 protocol ProductTableViewCellDelegate : class {
-    func productTableViewCellDidTapAdd(indexPath: IndexPath)
-    func productTableViewCellDidTapPlus(_ sender: ProductTableViewCell)
-    func productTableViewCellDidTapMinus(_ sender: ProductTableViewCell)
+    func productTableViewCellDidTapAdd(id: Int, indexPath: IndexPath)
+    func productTableViewCellDidTapPlus(id: Int,indexPath: IndexPath)
+    func productTableViewCellDidTapMinus(id: Int,indexPath: IndexPath)
 }

@@ -17,6 +17,7 @@
 		D6029EBA226C0693008E66F1 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6029EB9226C0693008E66F1 /* Banner.swift */; };
 		D6029EBE226C0747008E66F1 /* BannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6029EBD226C0747008E66F1 /* BannerCollectionViewCell.swift */; };
 		D6519DC12272981400CBD920 /* ProductInCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6519DC02272981400CBD920 /* ProductInCart.swift */; };
+		D6519DC3227A9D3100CBD920 /* ProductInCartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6519DC2227A9D3100CBD920 /* ProductInCartCollectionViewCell.swift */; };
 		D66EECF2226CC0D80034B6B6 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66EECF1226CC0D80034B6B6 /* CheckoutViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		D6029EB9226C0693008E66F1 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		D6029EBD226C0747008E66F1 /* BannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCollectionViewCell.swift; sourceTree = "<group>"; };
 		D6519DC02272981400CBD920 /* ProductInCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInCart.swift; sourceTree = "<group>"; };
+		D6519DC2227A9D3100CBD920 /* ProductInCartCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInCartCollectionViewCell.swift; sourceTree = "<group>"; };
 		D66EECF1226CC0D80034B6B6 /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,12 +69,13 @@
 			isa = PBXGroup;
 			children = (
 				D6029EA1226BC145008E66F1 /* AppDelegate.swift */,
-				D6029EBD226C0747008E66F1 /* BannerCollectionViewCell.swift */,
 				D6029EB9226C0693008E66F1 /* Banner.swift */,
-				D6029EA3226BC145008E66F1 /* ViewController.swift */,
-				D6029EB5226BE80D008E66F1 /* ProductTableViewCell.swift */,
+				D6029EBD226C0747008E66F1 /* BannerCollectionViewCell.swift */,
 				D6029EB7226BF7EF008E66F1 /* Product.swift */,
+				D6029EB5226BE80D008E66F1 /* ProductTableViewCell.swift */,
+				D6029EA3226BC145008E66F1 /* ViewController.swift */,
 				D6519DC02272981400CBD920 /* ProductInCart.swift */,
+				D6519DC2227A9D3100CBD920 /* ProductInCartCollectionViewCell.swift */,
 				D66EECF1226CC0D80034B6B6 /* CheckoutViewController.swift */,
 				D6029EA5226BC145008E66F1 /* Main.storyboard */,
 				D6029EA8226BC146008E66F1 /* Assets.xcassets */,
@@ -157,6 +160,7 @@
 				D6029EBE226C0747008E66F1 /* BannerCollectionViewCell.swift in Sources */,
 				D6029EA4226BC145008E66F1 /* ViewController.swift in Sources */,
 				D6029EB8226BF7EF008E66F1 /* Product.swift in Sources */,
+				D6519DC3227A9D3100CBD920 /* ProductInCartCollectionViewCell.swift in Sources */,
 				D6029EBA226C0693008E66F1 /* Banner.swift in Sources */,
 				D6029EA2226BC145008E66F1 /* AppDelegate.swift in Sources */,
 				D6029EB6226BE80D008E66F1 /* ProductTableViewCell.swift in Sources */,

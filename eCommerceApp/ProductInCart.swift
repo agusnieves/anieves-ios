@@ -11,10 +11,12 @@ import UIKit
 
 class ProductInCart {
     
+    var id: Int
     var product: Product
     var quantity: Int
     
     init(product: Product, quantity: Int){
+        self.id = product.id
         self.product = product
         self.quantity = quantity
     }

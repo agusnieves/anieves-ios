@@ -17,14 +17,15 @@ class ViewController: UIViewController {
     let listOfSections: [String] = ["Fruits", "Veggies"]
     var products: [[Product]] = [[]]
     var banners: [Banner] = []
+    var productsInCart: [ProductInCart] = []
     
     func createProducts() -> [[Product]] {
         
-        let kiwi = Product(image: #imageLiteral(resourceName: "Kiwi"), name: "Kiwi", price: "$30")
-        let grapefruit = Product(image: #imageLiteral(resourceName: "Grapefruit"), name: "Grapefruit", price: "$45")
-        let watermelon = Product(image: #imageLiteral(resourceName: "Watermelon"), name: "Watermelon", price: "$45")
-        let avocado = Product(image: #imageLiteral(resourceName: "Avocado"), name: "Avocado", price: "$30")
-        let cucumber = Product(image: #imageLiteral(resourceName: "Cucumber"), name: "Cucumber", price: "$30")
+        let kiwi = Product(id: 1,image: #imageLiteral(resourceName: "Kiwi"), name: "Kiwi", price: 30)
+        let grapefruit = Product(id: 2,image: #imageLiteral(resourceName: "Grapefruit"), name: "Grapefruit", price: 30)
+        let watermelon = Product(id: 3,image: #imageLiteral(resourceName: "Watermelon"), name: "Watermelon", price: 45)
+        let avocado = Product(id: 4,image: #imageLiteral(resourceName: "Avocado"), name: "Avocado", price: 30)
+        let cucumber = Product(id: 5,image: #imageLiteral(resourceName: "Cucumber"), name: "Cucumber", price: 30)
         
         
         return [[kiwi, grapefruit, watermelon],[avocado,cucumber]]
@@ -89,16 +90,23 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
         return productCell
     }
     
-    func productTableViewCellDidTapAdd(indexPath: IndexPath) {
-        print(products[indexPath.section][indexPath.row].name)
-    }
-    
-    func productTableViewCellDidTapPlus(_ sender: ProductTableViewCell) {
-    
-    }
-    
-    func productTableViewCellDidTapMinus(_ sender: ProductTableViewCell) {
+    func productTableViewCellDidTapAdd(id: Int, indexPath: IndexPath) {
+        let productInCart = ProductInCart(product: products[indexPath.section][indexPath.row], quantity: 1)
+        productsInCart.append(productInCart)
         
+        print(products[indexPath.section][indexPath.row].name)
+        
+        tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+    }
+    
+    func productTableViewCellDidTapPlus(id: Int, indexPath: IndexPath) {
+        let productInCart = ProductInCart(product: products[indexPath.section][indexPath.row], quantity: 1)
+
+    }
+    
+    func productTableViewCellDidTapMinus(id: Int, indexPath: IndexPath) {
+        let productInCart = ProductInCart(product: products[indexPath.section][indexPath.row], quantity: 1)
+
     }
 }
 
