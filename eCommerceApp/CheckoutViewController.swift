@@ -11,23 +11,27 @@ import UIKit
 class CheckoutViewController: UIViewController {
     
     @IBOutlet weak var checkoutCollectionView: UICollectionView!
-    var products: [ProductInCart] = []
-
-    func createPIC() -> [ProductInCart] {
+    @IBOutlet weak var totalValue: UILabel!
+    var modelManager = ModelManager.shared
+    var product: [Product] = []
+    var total: Int = 0
+    
+    func createPIC() -> [Product] {
         
-        let kiwi = Product(id: 1,image: #imageLiteral(resourceName: "Kiwi"), name: "Kiwi", price: 30)
-        let kiwiInCart = ProductInCart(product: kiwi, quantity: 1)
-        let kiwiInCart1 = ProductInCart(product: kiwi, quantity: 1)
-        let kiwiInCart2 = ProductInCart(product: kiwi, quantity: 1)
-
-        return [kiwiInCart, kiwiInCart1, kiwiInCart2]
+        for value in modelManager.productsCart.values {
+            product.append(value)
+            total = total + (value.price * value.quantity)
+        }
+        return product
         
     }
     
     @IBAction func doCheckoutButton(_ sender: Any) {
         let alertCheckoutDone = UIAlertController(title: "Purchase successful", message: "Come back with us", preferredStyle: .alert)
         alertCheckoutDone.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
-                // implement here quit view from stack
+            self.modelManager.productsCart.removeAll()
+            self.checkoutCollectionView.reloadData()
+            // implement here quit view from stack
         }))
         
         self.present(alertCheckoutDone, animated: true, completion: nil)
@@ -36,10 +40,16 @@ class CheckoutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        products = createPIC()
         
         checkoutCollectionView.dataSource = self
         checkoutCollectionView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        product = createPIC()
+        totalValue.text = "$ " + String(total)
+        checkoutCollectionView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,13 +60,13 @@ class CheckoutViewController: UIViewController {
 extension CheckoutViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return products.count
+        return product.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let itemCell = checkoutCollectionView.dequeueReusableCell(withReuseIdentifier: "productInCart", for: indexPath) as! ProductInCartCollectionViewCell
         
-        itemCell.setProductInCart(productInCart: products[indexPath.row])
+        itemCell.setProductInCart(productInCart: product[indexPath.row])
         
         return itemCell
     }

@@ -15,10 +15,10 @@ class ProductInCartCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productQuantity: UILabel!
     
-    func setProductInCart(productInCart: ProductInCart) {
-        productImage.image = productInCart.product.image
-        productTitle.text = productInCart.product.name
-        productPrice.text = "$" + String(productInCart.product.price)
-        productQuantity.text = String(productInCart.quantity)
+    func setProductInCart(productInCart: Product) {
+        productImage.image = productInCart.image
+        productTitle.text = productInCart.name
+        productPrice.text = "$" + String(productInCart.price)
+        productQuantity.text = String(productInCart.quantity) + " units"
     }
 }

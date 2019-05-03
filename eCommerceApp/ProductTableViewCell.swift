@@ -27,9 +27,11 @@ class ProductTableViewCell: UITableViewCell {
         productTitle.text = product.name
         productPrice.text = "$" + String(product.price)
         productId = product.id
+        productQuantity.text = String(product.quantity)
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         if(isInCart) {
             productAddButton.isHidden = true
             productPlusButton.isHidden = false
@@ -55,11 +57,19 @@ class ProductTableViewCell: UITableViewCell {
         }
     }
     @IBAction func productPlusButtonAction(_ sender: UIButton) {
-        print("Sube")
+        if let index = indexPath {
+            delegate?.productTableViewCellDidTapPlus(id: productId!,indexPath: index)
+        } else {
+            print("No index path")
+        }
     }
     
     @IBAction func productMinusButtonAction(_ sender: UIButton) {
-        print("Baja")
+        if let index = indexPath {
+            delegate?.productTableViewCellDidTapMinus(id: productId!,indexPath: index)
+        } else {
+            print("No index path")
+        }
     }
 }
 

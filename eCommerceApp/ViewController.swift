@@ -13,11 +13,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var bannerCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
 
-    
+    let modelManager = ModelManager.shared
     let listOfSections: [String] = ["Fruits", "Veggies"]
     var products: [[Product]] = [[]]
     var banners: [Banner] = []
-    var productsInCart: [ProductInCart] = []
+    var productsInCart: [Int:Product] = [:]
     
     func createProducts() -> [[Product]] {
         
@@ -45,20 +45,20 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        products = createProducts()
         banners = createBanners()
-        
         bannerCollectionView.delegate = self
         bannerCollectionView.dataSource = self
         tableView.delegate = self
         tableView.dataSource = self
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var checkoutController = segue.destination as! CheckoutViewController
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        products = createProducts()
         
+        tableView.reloadData()
     }
-
+    
     @IBAction func goToCart(_ sender: Any) {
         self.performSegue(withIdentifier: "goToCartSegue", sender:  self)
     }
@@ -91,22 +91,32 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func productTableViewCellDidTapAdd(id: Int, indexPath: IndexPath) {
-        let productInCart = ProductInCart(product: products[indexPath.section][indexPath.row], quantity: 1)
-        productsInCart.append(productInCart)
-        
-        print(products[indexPath.section][indexPath.row].name)
-        
-        tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+        if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
+            cell.isInCart = true
+        }
+        let productSelected = products[indexPath.section][indexPath.row]
+        productSelected.quantity = 1
+        modelManager.productsCart[id] = productSelected
+        tableView.reloadData()
     }
     
     func productTableViewCellDidTapPlus(id: Int, indexPath: IndexPath) {
-        let productInCart = ProductInCart(product: products[indexPath.section][indexPath.row], quantity: 1)
-
+        modelManager.productsCart[id]?.quantity = (modelManager.productsCart[id]?.quantity ?? 0) + 1
+        tableView.reloadData()
     }
     
     func productTableViewCellDidTapMinus(id: Int, indexPath: IndexPath) {
-        let productInCart = ProductInCart(product: products[indexPath.section][indexPath.row], quantity: 1)
-
+        guard let productInCart = modelManager.productsCart[id] else {
+            return
+        }
+        productInCart.quantity = productInCart.quantity - 1
+        if productInCart.quantity < 1 {
+            if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
+                cell.isInCart = false
+            }
+        }
+        modelManager.productsCart.removeValue(forKey: id)
+        tableView.reloadData()
     }
 }
 

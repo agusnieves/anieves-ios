@@ -15,12 +15,14 @@ class Product {
     var image: UIImage
     var name: String
     var price: Int
+    var quantity: Int
     
     init(id: Int, image: UIImage, name: String, price: Int){
         self.id = id
         self.image = image
         self.name = name
         self.price = price
+        self.quantity = 0
     }
 
 }
