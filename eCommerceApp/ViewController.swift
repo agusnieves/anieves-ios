@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     let modelManager = ModelManager.shared
     let listOfSections: [String] = ["Fruits", "Veggies"]
     var products: [[Product]] = [[]]
+    var currentProducts: [[Product]] = [[]] //to update the table once searching
     var banners: [Banner] = []
     var productsInCart: [Int:Product] = [:]
     
@@ -26,7 +27,6 @@ class ViewController: UIViewController {
         let watermelon = Product(id: 3,image: #imageLiteral(resourceName: "Watermelon"), name: "Watermelon", price: 45)
         let avocado = Product(id: 4,image: #imageLiteral(resourceName: "Avocado"), name: "Avocado", price: 30)
         let cucumber = Product(id: 5,image: #imageLiteral(resourceName: "Cucumber"), name: "Cucumber", price: 30)
-        
         
         return [[kiwi, grapefruit, watermelon],[avocado,cucumber]]
         
@@ -72,6 +72,7 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         products = createProducts()
         products = updateProducts(productsDict: modelManager.productsCart)
+        currentProducts = products
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
@@ -109,9 +110,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func productTableViewCellDidTapAdd(id: Int, indexPath: IndexPath) {
-//        if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
-//            cell.isInCart = true
-//        }
         let productSelected = products[indexPath.section][indexPath.row]
         productSelected.quantity = 1
         modelManager.productsCart[id] = productSelected
@@ -131,9 +129,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
         }
         productInCart.quantity = productInCart.quantity - 1
         if productInCart.quantity < 1 {
-//            if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
-//                cell.isInCart = false
-//            }
             modelManager.productsCart.removeValue(forKey: id)
         }
         tableView.reloadData()
@@ -160,9 +155,17 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     }*/
 }
 
-extension ViewController: UISearchResultsUpdating {
+extension ViewController: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //let array = products.
     }
     
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        <#code#>
+    }
+    
+    private func setUpSearchBar() {
+        searchBar.delegate = self
+    }
 }

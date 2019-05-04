@@ -10,6 +10,7 @@ import UIKit
 
 class CheckoutViewController: UIViewController {
     
+    @IBOutlet weak var emptyCartMsj: UILabel!
     @IBOutlet weak var checkoutCollectionView: UICollectionView!
     @IBOutlet weak var totalValue: UILabel!
     @IBOutlet weak var checkoutButton: UIButton!
@@ -31,12 +32,20 @@ class CheckoutViewController: UIViewController {
         let alertCheckoutDone = UIAlertController(title: "Purchase successful", message: "Come back with us", preferredStyle: .alert)
         alertCheckoutDone.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
             self.modelManager.productsCart.removeAll()
-            self.checkoutCollectionView.reloadData()
-            // implement here quit view from stack
+            self.navigationController?.popViewController(animated: false)
         }))
         
         self.present(alertCheckoutDone, animated: true, completion: nil)
         
+    }
+    
+    func setCheckoutStatus() {
+        if(modelManager.productsCart.count == 0) {
+            checkoutButton.isEnabled = false
+            checkoutButton.backgroundColor = UIColor.lightGray
+            emptyCartMsj.text = "Your cart is empty"
+            emptyCartMsj.isHidden = false
+        }
     }
     
     override func viewDidLoad() {
@@ -48,7 +57,9 @@ class CheckoutViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        emptyCartMsj.isHidden = true
         product = createPIC()
+        self.setCheckoutStatus()
         totalValue.text = "$ " + String(total)
         checkoutCollectionView.reloadData()
     }
@@ -71,7 +82,4 @@ extension CheckoutViewController: UICollectionViewDataSource, UICollectionViewDe
         
         return itemCell
     }
-    
-    
-    
 }

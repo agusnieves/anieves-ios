@@ -323,14 +323,20 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xTY-Dw-gZm">
-                                <rect key="frame" x="20.000000000000004" y="625" width="37.333333333333343" height="21"/>
+                                <rect key="frame" x="40" y="625" width="37.333333333333343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNd-qC-OWs">
-                                <rect key="frame" x="339.33333333333331" y="618" width="54.666666666666686" height="28"/>
+                                <rect key="frame" x="319.33333333333331" y="618" width="54.666666666666686" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTD-hM-9Gh">
+                                <rect key="frame" x="175" y="607" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -338,9 +344,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Xhg-t6-yjo" firstAttribute="top" secondItem="HGv-1C-mjQ" secondAttribute="bottom" constant="60" id="1qa-zK-iCO"/>
-                            <constraint firstItem="xTY-Dw-gZm" firstAttribute="leading" secondItem="94B-k4-cWO" secondAttribute="leading" constant="20" id="7Hb-kE-TrX"/>
+                            <constraint firstItem="xTY-Dw-gZm" firstAttribute="leading" secondItem="94B-k4-cWO" secondAttribute="leading" constant="40" id="7Hb-kE-TrX"/>
+                            <constraint firstItem="OTD-hM-9Gh" firstAttribute="centerY" secondItem="94B-k4-cWO" secondAttribute="centerY" id="DAb-YH-yrW"/>
                             <constraint firstItem="Xhg-t6-yjo" firstAttribute="leading" secondItem="94B-k4-cWO" secondAttribute="leading" constant="20" id="DRx-Cd-WwJ"/>
-                            <constraint firstItem="94B-k4-cWO" firstAttribute="trailing" secondItem="aNd-qC-OWs" secondAttribute="trailing" constant="20" id="QCF-Ir-joI"/>
+                            <constraint firstItem="OTD-hM-9Gh" firstAttribute="centerX" secondItem="94B-k4-cWO" secondAttribute="centerX" id="MXa-bh-Ffo"/>
+                            <constraint firstItem="94B-k4-cWO" firstAttribute="trailing" secondItem="aNd-qC-OWs" secondAttribute="trailing" constant="40" id="QCF-Ir-joI"/>
                             <constraint firstItem="94B-k4-cWO" firstAttribute="bottom" secondItem="Xhg-t6-yjo" secondAttribute="bottom" constant="20" id="cW0-pi-p9t"/>
                             <constraint firstItem="Xhg-t6-yjo" firstAttribute="top" secondItem="aNd-qC-OWs" secondAttribute="bottom" constant="20" id="dOQ-hb-4U9"/>
                             <constraint firstItem="HGv-1C-mjQ" firstAttribute="top" secondItem="94B-k4-cWO" secondAttribute="top" id="dhk-DQ-07J"/>
@@ -355,6 +363,7 @@
                     <connections>
                         <outlet property="checkoutButton" destination="Xhg-t6-yjo" id="Tt2-Zc-nIX"/>
                         <outlet property="checkoutCollectionView" destination="HGv-1C-mjQ" id="KtJ-Dx-ScY"/>
+                        <outlet property="emptyCartMsj" destination="OTD-hM-9Gh" id="vml-2S-OOF"/>
                         <outlet property="totalValue" destination="aNd-qC-OWs" id="Hu1-rX-wLv"/>
                     </connections>
                 </viewController>
