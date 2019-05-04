@@ -43,6 +43,22 @@ class ViewController: UIViewController {
         
     }
     
+    func updateProducts(productsDict: [Int:Product]) -> [[Product]] {
+        var h = 0
+        for (id, product) in productsDict {
+            print(id, product.name)
+            for i in 0...1 {
+                h = products[i].count - 1
+                for j in 0...h {
+                    if products[i][j].id == id {
+                        products[i][j].quantity = product.quantity
+                    }
+                }
+            }
+        }
+        return products
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         banners = createBanners()
@@ -55,7 +71,9 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         products = createProducts()
-        
+        products = updateProducts(productsDict: modelManager.productsCart)
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.reloadData()
     }
     
@@ -91,9 +109,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func productTableViewCellDidTapAdd(id: Int, indexPath: IndexPath) {
-        if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
-            cell.isInCart = true
-        }
+//        if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
+//            cell.isInCart = true
+//        }
         let productSelected = products[indexPath.section][indexPath.row]
         productSelected.quantity = 1
         modelManager.productsCart[id] = productSelected
@@ -101,21 +119,23 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func productTableViewCellDidTapPlus(id: Int, indexPath: IndexPath) {
+        print("plus")
         modelManager.productsCart[id]?.quantity = (modelManager.productsCart[id]?.quantity ?? 0) + 1
         tableView.reloadData()
     }
     
     func productTableViewCellDidTapMinus(id: Int, indexPath: IndexPath) {
+        print("min")
         guard let productInCart = modelManager.productsCart[id] else {
             return
         }
         productInCart.quantity = productInCart.quantity - 1
         if productInCart.quantity < 1 {
-            if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
-                cell.isInCart = false
-            }
+//            if let cell = self.tableView.cellForRow(at: indexPath) as? ProductTableViewCell {
+//                cell.isInCart = false
+//            }
+            modelManager.productsCart.removeValue(forKey: id)
         }
-        modelManager.productsCart.removeValue(forKey: id)
         tableView.reloadData()
     }
 }

@@ -21,4 +21,10 @@ class ProductInCartCollectionViewCell: UICollectionViewCell {
         productPrice.text = "$" + String(productInCart.price)
         productQuantity.text = String(productInCart.quantity) + " units"
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.productImage.layer.cornerRadius = CGFloat(roundf(Float(self.productImage.frame.size.width / 10.0)))
+        
+    }
 }

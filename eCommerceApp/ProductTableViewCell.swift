@@ -32,7 +32,9 @@ class ProductTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if(isInCart) {
+        self.productImageView.layer.cornerRadius = CGFloat(roundf(Float(self.productImageView.frame.size.width / 2.0)))
+        self.productAddButton.layer.cornerRadius = CGFloat(roundf(Float(self.productAddButton.frame.size.height / 2.0)))
+        if(self.productQuantity.text != "0") {
             productAddButton.isHidden = true
             productPlusButton.isHidden = false
             productMinusButton.isHidden = false

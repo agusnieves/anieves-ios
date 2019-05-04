@@ -12,6 +12,7 @@ class CheckoutViewController: UIViewController {
     
     @IBOutlet weak var checkoutCollectionView: UICollectionView!
     @IBOutlet weak var totalValue: UILabel!
+    @IBOutlet weak var checkoutButton: UIButton!
     var modelManager = ModelManager.shared
     var product: [Product] = []
     var total: Int = 0
@@ -40,7 +41,7 @@ class CheckoutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.checkoutButton.layer.cornerRadius = CGFloat(roundf(Float(self.checkoutButton.frame.size.height / 2.0)))
         checkoutCollectionView.dataSource = self
         checkoutCollectionView.delegate = self
     }
