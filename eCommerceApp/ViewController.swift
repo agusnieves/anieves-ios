@@ -22,11 +22,11 @@ class ViewController: UIViewController {
     
     func createProducts() -> [[Product]] {
         
-        let kiwi = Product(id: 1,image: #imageLiteral(resourceName: "Kiwi"), name: "Kiwi", price: 30)
-        let grapefruit = Product(id: 2,image: #imageLiteral(resourceName: "Grapefruit"), name: "Grapefruit", price: 30)
-        let watermelon = Product(id: 3,image: #imageLiteral(resourceName: "Watermelon"), name: "Watermelon", price: 45)
-        let avocado = Product(id: 4,image: #imageLiteral(resourceName: "Avocado"), name: "Avocado", price: 30)
-        let cucumber = Product(id: 5,image: #imageLiteral(resourceName: "Cucumber"), name: "Cucumber", price: 30)
+        let kiwi = Product(id: 1,image: #imageLiteral(resourceName: "Kiwi"), name: "Kiwi", price: 30, cat: "fruit")
+        let grapefruit = Product(id: 2,image: #imageLiteral(resourceName: "Grapefruit"), name: "Grapefruit", price: 30, cat: "fruit")
+        let watermelon = Product(id: 3,image: #imageLiteral(resourceName: "Watermelon"), name: "Watermelon", price: 45, cat: "fruit")
+        let avocado = Product(id: 4,image: #imageLiteral(resourceName: "Avocado"), name: "Avocado", price: 30, cat: "veggie")
+        let cucumber = Product(id: 5,image: #imageLiteral(resourceName: "Cucumber"), name: "Cucumber", price: 30, cat: "veggie")
         
         return [[kiwi, grapefruit, watermelon],[avocado,cucumber]]
         
@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         return [banner1, banner2, banner3, banner4]
         
     }
+    
     
     func updateProducts(productsDict: [Int:Product]) -> [[Product]] {
         var h = 0
@@ -62,6 +63,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         banners = createBanners()
+        
+        setUpSearchBar()
+        //alterLayout()
+        
         bannerCollectionView.delegate = self
         bannerCollectionView.dataSource = self
         tableView.delegate = self
@@ -87,7 +92,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     
  
     func numberOfSections(in tableView: UITableView) -> Int {
-        return products.count
+        return currentProducts.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -95,13 +100,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return products[section].count
+        return currentProducts[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let productCell = tableView.dequeueReusableCell(withIdentifier: "productToSale", for: indexPath) as! ProductTableViewCell
-        productCell.setProduct(product: products[indexPath.section][indexPath.row])
+        productCell.setProduct(product: currentProducts[indexPath.section][indexPath.row])
         productCell.indexPath = indexPath
         productCell.delegate = self
         productCell.selectionStyle = .none
@@ -157,12 +162,30 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
 
 extension ViewController: UISearchBarDelegate {
     
+    func alterLayout() {
+        tableView.tableHeaderView = UIView()
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //let array = products.
+        guard !searchText.isEmpty else {
+            currentProducts = products;
+            tableView.reloadData()
+            return
+        }
+        
+        currentProducts[0] = products[0].filter({ (product) -> Bool in
+            guard let text = searchBar.text else {return false}
+            return product.name.lowercased().contains(searchText.lowercased())
+        })
+        currentProducts[1] = products[1].filter({ (product) -> Bool in
+            guard let text = searchBar.text else {return false}
+            return product.name.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        <#code#>
+    
     }
     
     private func setUpSearchBar() {
