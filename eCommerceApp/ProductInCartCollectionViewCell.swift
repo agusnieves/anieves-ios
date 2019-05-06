@@ -15,16 +15,15 @@ class ProductInCartCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var productPrice: UILabel!
     @IBOutlet weak var productQuantity: UILabel!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.productImage.layer.cornerRadius = CGFloat(roundf(Float(self.productImage.frame.size.width / 20.0)))
+    }
+
     func setProductInCart(productInCart: Product) {
         productImage.image = productInCart.image
         productTitle.text = productInCart.name
         productPrice.text = "$" + String(productInCart.price)
         productQuantity.text = String(productInCart.quantity) + " units"
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.productImage.layer.cornerRadius = CGFloat(roundf(Float(self.productImage.frame.size.width / 10.0)))
-        
     }
 }

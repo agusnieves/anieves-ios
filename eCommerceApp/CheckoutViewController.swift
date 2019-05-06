@@ -14,43 +14,14 @@ class CheckoutViewController: UIViewController {
     @IBOutlet weak var checkoutCollectionView: UICollectionView!
     @IBOutlet weak var totalValue: UILabel!
     @IBOutlet weak var checkoutButton: UIButton!
+    
     var modelManager = ModelManager.shared
     var product: [Product] = []
     var total: Int = 0
     
-    func createPIC() -> [Product] {
-        
-        for value in modelManager.productsCart.values {
-            product.append(value)
-            total = total + (value.price * value.quantity)
-        }
-        return product
-        
-    }
-    
-    @IBAction func doCheckoutButton(_ sender: Any) {
-        let alertCheckoutDone = UIAlertController(title: "Purchase successful", message: "Come back with us", preferredStyle: .alert)
-        alertCheckoutDone.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
-            self.modelManager.productsCart.removeAll()
-            self.navigationController?.popViewController(animated: false)
-        }))
-        
-        self.present(alertCheckoutDone, animated: true, completion: nil)
-        
-    }
-    
-    func setCheckoutStatus() {
-        if(modelManager.productsCart.count == 0) {
-            checkoutButton.isEnabled = false
-            checkoutButton.backgroundColor = UIColor.lightGray
-            emptyCartMsj.text = "Your cart is empty"
-            emptyCartMsj.isHidden = false
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.checkoutButton.layer.cornerRadius = CGFloat(roundf(Float(self.checkoutButton.frame.size.height / 2.0)))
+        setUpCart()
         checkoutCollectionView.dataSource = self
         checkoutCollectionView.delegate = self
     }
@@ -67,9 +38,43 @@ class CheckoutViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    func createPIC() -> [Product] {
+        
+        for value in modelManager.productsCart.values {
+            product.append(value)
+            total = total + (value.price * value.quantity)
+        }
+        return product
+        
+    }
+    
+    func setCheckoutStatus() {
+        if(modelManager.productsCart.count == 0) {
+            checkoutButton.isEnabled = false
+            checkoutButton.backgroundColor = UIColor.lightGray
+            emptyCartMsj.text = "Your cart is empty"
+            emptyCartMsj.isHidden = false
+        }
+    }
+
+    func setUpCart() {
+        self.checkoutButton.layer.cornerRadius = CGFloat(roundf(Float(self.checkoutButton.frame.size.height / 2.0)))
+    }
+    
+    @IBAction func doCheckoutButton(_ sender: Any) {
+        let alertCheckoutDone = UIAlertController(title: "Purchase successful", message: "Come back with us", preferredStyle: .alert)
+        alertCheckoutDone.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
+            self.modelManager.productsCart.removeAll()
+            self.navigationController?.popViewController(animated: false)
+        }))
+        
+        self.present(alertCheckoutDone, animated: true, completion: nil)
+        
+    }
 }
 
-extension CheckoutViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension CheckoutViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return product.count
@@ -81,5 +86,12 @@ extension CheckoutViewController: UICollectionViewDataSource, UICollectionViewDe
         itemCell.setProductInCart(productInCart: product[indexPath.row])
         
         return itemCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let padding: CGFloat =  20
+        let collectionViewSize = collectionView.frame.size.width - padding
+        
+        return CGSize(width: collectionViewSize/2, height: collectionViewSize/1.5)
     }
 }

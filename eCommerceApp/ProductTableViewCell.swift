@@ -22,18 +22,12 @@ class ProductTableViewCell: UITableViewCell {
     var isInCart: Bool = false
     var productId: Int?
     
-    func setProduct(product: Product) {
-        productImageView.image = product.image
-        productTitle.text = product.name
-        productPrice.text = "$" + String(product.price)
-        productId = product.id
-        productQuantity.text = String(product.quantity)
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.productImageView.layer.cornerRadius = CGFloat(roundf(Float(self.productImageView.frame.size.width / 2.0)))
         self.productAddButton.layer.cornerRadius = CGFloat(roundf(Float(self.productAddButton.frame.size.height / 2.0)))
+        self.productAddButton.layer.borderWidth = 2.0
+        self.productAddButton.layer.borderColor = UIColor.blue.cgColor
         if(self.productQuantity.text != "0") {
             productAddButton.isHidden = true
             productPlusButton.isHidden = false
@@ -49,6 +43,14 @@ class ProductTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    
+    func setProduct(product: Product) {
+        productImageView.image = product.image
+        productTitle.text = product.name
+        productPrice.text = "$" + String(product.price)
+        productId = product.id
+        productQuantity.text = String(product.quantity)
     }
     
     @IBAction func productAddButtonAction(_ sender: UIButton) {

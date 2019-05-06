@@ -15,9 +15,5 @@ class ModelManager{
     private init(){
     }
     
-    func requestForCart(){
-        //Code Process
-    }
-    
 }
 //ModelManager.shared.requestForCart()

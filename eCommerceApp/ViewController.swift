@@ -9,16 +9,51 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    //IBOutlets
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var bannerCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-
+    @IBOutlet weak var pageControl: UIPageControl!
+    
+    //Lets and vars
+    
     let modelManager = ModelManager.shared
     let listOfSections: [String] = ["Fruits", "Veggies"]
     var products: [[Product]] = [[]]
     var currentProducts: [[Product]] = [[]] //to update the table once searching
     var banners: [Banner] = []
     var productsInCart: [Int:Product] = [:]
+    
+    //Override functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        banners = createBanners()
+        
+        setUpBanners()
+        setUpSearchBar()
+        setUpTableView()
+        
+        bannerCollectionView.delegate = self
+        bannerCollectionView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        products = createProducts()
+        products = updateProducts(productsDict: modelManager.productsCart)
+        currentProducts = products
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
+    }
+    
+    //Custom functions
     
     func createProducts() -> [[Product]] {
         
@@ -60,33 +95,14 @@ class ViewController: UIViewController {
         return products
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        banners = createBanners()
-        
-        setUpSearchBar()
-        //alterLayout()
-        
-        bannerCollectionView.delegate = self
-        bannerCollectionView.dataSource = self
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        products = createProducts()
-        products = updateProducts(productsDict: modelManager.productsCart)
-        currentProducts = products
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.reloadData()
-    }
+    //IBActions
     
     @IBAction func goToCart(_ sender: Any) {
         self.performSegue(withIdentifier: "goToCartSegue", sender:  self)
     }
 }
+
+//Extension for TableView
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTableViewCellDelegate {
     
@@ -138,7 +154,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
         }
         tableView.reloadData()
     }
+    
+    func setUpTableView() {
+        tableView.scrollsToTop = false
+    }
 }
+
+//Extension for Collection View
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -155,16 +177,30 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         return bannerCell
     }
     
-    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return
-    }*/
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+    }
+    
+    func setUpBanners() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize.width = bannerCollectionView.frame.width
+        layout.itemSize.height = bannerCollectionView.frame.height
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        bannerCollectionView.setCollectionViewLayout(layout, animated: false)
+        bannerCollectionView.isPagingEnabled = true
+        bannerCollectionView.alwaysBounceVertical = false
+        bannerCollectionView.showsHorizontalScrollIndicator = false
+        pageControl.pageIndicatorTintColor = UIColor.gray
+        pageControl.currentPageIndicatorTintColor = UIColor.lightGray
+    }
 }
 
+//Extension for SearchBar
+
 extension ViewController: UISearchBarDelegate {
-    
-    func alterLayout() {
-        tableView.tableHeaderView = UIView()
-    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
@@ -175,20 +211,18 @@ extension ViewController: UISearchBarDelegate {
         
         currentProducts[0] = products[0].filter({ (product) -> Bool in
             guard let text = searchBar.text else {return false}
-            return product.name.lowercased().contains(searchText.lowercased())
+            return product.name.lowercased().contains(text.lowercased())
         })
         currentProducts[1] = products[1].filter({ (product) -> Bool in
             guard let text = searchBar.text else {return false}
-            return product.name.lowercased().contains(searchText.lowercased())
+            return product.name.lowercased().contains(text.lowercased())
         })
         tableView.reloadData()
     }
     
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-    
-    }
-    
-    private func setUpSearchBar() {
+    func setUpSearchBar() {
+        searchBar.barTintColor = UIColor.lightGray
+        searchBar.layer.cornerRadius = CGFloat(roundf(Float(self.searchBar.frame.size.height / 2.0)))
         searchBar.delegate = self
     }
 }
