@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     func updateProducts(productsDict: [Int:Product]) -> [[Product]] {
         var h = 0
         for (id, product) in productsDict {
-            print(id, product.name)
+//            print(id, product.name)
             for i in 0...1 {
                 h = products[i].count - 1
                 for j in 0...h {
@@ -138,13 +138,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func productTableViewCellDidTapPlus(id: Int, indexPath: IndexPath) {
-        print("plus")
+//        print("plus")
         modelManager.productsCart[id]?.quantity = (modelManager.productsCart[id]?.quantity ?? 0) + 1
         tableView.reloadData()
     }
     
     func productTableViewCellDidTapMinus(id: Int, indexPath: IndexPath) {
-        print("min")
+//        print("min")
         guard let productInCart = modelManager.productsCart[id] else {
             return
         }
