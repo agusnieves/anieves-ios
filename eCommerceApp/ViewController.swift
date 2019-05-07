@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         banners = createBanners()
-        
+
         setUpBanners()
         setUpSearchBar()
         setUpTableView()
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
     
     func createProducts() -> [[Product]] {
         
-        let kiwi = Product(id: 1,image: #imageLiteral(resourceName: "Kiwi"), name: "Kiwi", price: 30, cat: "fruit")
+        let kiwi = Product(id: 1,image: #imageLiteral(resourceName: "Kiwi-2"), name: "Kiwi", price: 30, cat: "fruit")
         let grapefruit = Product(id: 2,image: #imageLiteral(resourceName: "Grapefruit"), name: "Grapefruit", price: 30, cat: "fruit")
         let watermelon = Product(id: 3,image: #imageLiteral(resourceName: "Watermelon"), name: "Watermelon", price: 45, cat: "fruit")
         let avocado = Product(id: 4,image: #imageLiteral(resourceName: "Avocado"), name: "Avocado", price: 30, cat: "veggie")
