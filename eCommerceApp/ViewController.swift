@@ -181,6 +181,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: bannerCollectionView.bounds.width, height: bannerCollectionView.bounds.height)
+    }
+    
     func setUpBanners() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
