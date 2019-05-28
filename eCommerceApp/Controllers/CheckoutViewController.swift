@@ -41,9 +41,10 @@ class CheckoutViewController: UIViewController {
     
     func createPIC() -> [Product] {
         
-        for value in modelManager.productsCart.values {
-            product.append(value)
-            total = total + (value.price * value.quantity)
+        for (id, qty) in modelManager.productsCart {
+            let prod = modelManager.productsById[id]!
+            product.append(prod)
+            total = total + (prod.price! * qty)
         }
         return product
         
@@ -65,7 +66,7 @@ class CheckoutViewController: UIViewController {
     @IBAction func doCheckoutButton(_ sender: Any) {
         let alertCheckoutDone = UIAlertController(title: "Purchase successful", message: "Come back with us", preferredStyle: .alert)
         alertCheckoutDone.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
-            self.modelManager.productsCart.removeAll()
+            self.modelManager.productsCart = [:]
             self.navigationController?.popViewController(animated: false)
         }))
         
@@ -77,7 +78,7 @@ class CheckoutViewController: UIViewController {
 extension CheckoutViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return product.count
+        return modelManager.productsCart.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

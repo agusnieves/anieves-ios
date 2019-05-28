@@ -21,9 +21,19 @@ class ProductInCartCollectionViewCell: UICollectionViewCell {
     }
 
     func setProductInCart(productInCart: Product) {
-        productImage.image = productInCart.image
+        if let imageUrl = productInCart.imageUrl {
+            productImage.kf.setImage(with: URL(string: imageUrl))
+        }
+        else {
+            self.productImage.image = #imageLiteral(resourceName: "noimage")
+        }
         productTitle.text = productInCart.name
-        productPrice.text = "$" + String(productInCart.price)
-        productQuantity.text = String(productInCart.quantity) + " units"
+        if let prodPrice = productInCart.price {
+            self.productPrice.text = "$" + String(prodPrice)
+        }
+        if let prodQuantity = ModelManager.shared.productsCart[productInCart.id!] {
+            self.productQuantity.text = String(prodQuantity) + " units"
+
+        }
     }
 }

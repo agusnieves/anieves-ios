@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class BannerCollectionViewCell: UICollectionViewCell {
     
@@ -22,6 +23,11 @@ class BannerCollectionViewCell: UICollectionViewCell {
     func setBanner(banner: Banner) {
         bannerTitle.text = banner.name
         bannerNote.text = banner.note
-        bannerImage.image = banner.image
+        if let imageUrl = banner.imageUrl {
+            bannerImage.kf.setImage(with: URL(string: imageUrl))
+        }
+        else {
+            // Set default image
+        }
     }
 }

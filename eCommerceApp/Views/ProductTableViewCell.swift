@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProductTableViewCell: UITableViewCell {
 
@@ -46,11 +47,20 @@ class ProductTableViewCell: UITableViewCell {
     }
     
     func setProduct(product: Product) {
-        productImageView.image = product.image
-        productTitle.text = product.name
-        productPrice.text = "$" + String(product.price)
-        productId = product.id
-        productQuantity.text = String(product.quantity)
+        if let imageUrl = product.imageUrl {
+            self.productImageView.kf.setImage(with: URL(string: imageUrl))
+        }
+        else {
+            self.productImageView.image = #imageLiteral(resourceName: "noimage")
+        }
+        self.productTitle.text = product.name
+        if let productPrice = product.price {
+            self.productPrice.text = "$" + String(productPrice)
+        }
+        self.productId = product.id
+        if let prodQuantity = ModelManager.shared.productsCart[product.id!] {
+            self.productQuantity.text = String(prodQuantity)
+        } 
     }
     
     @IBAction func productAddButtonAction(_ sender: UIButton) {
