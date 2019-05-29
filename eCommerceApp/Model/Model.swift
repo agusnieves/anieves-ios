@@ -13,6 +13,8 @@ class ModelManager{
     var products: [Product] = []
     var productsById: [Int:Product] = [:]
     var productsCart: [Int:Int] = [:]
+    var purchases: [Purchase] = []
+    var isCheckout: Bool = true
     
     private init(){
     }

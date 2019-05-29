@@ -78,6 +78,7 @@ class ViewController: UIViewController {
     //IBActions
     
     @IBAction func goToCart(_ sender: Any) {
+        modelManager.isCheckout = true
         self.performSegue(withIdentifier: "goToCartSegue", sender:  self)
     }
     
@@ -119,7 +120,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func productTableViewCellDidTapPlus(id: Int, indexPath: IndexPath) {
-//        print("plus")
         if let itemQuantity = modelManager.productsCart[id] {
             modelManager.changeItemQuantity(key: id, number: itemQuantity + 1)
         }
@@ -127,10 +127,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     }
     
     func productTableViewCellDidTapMinus(id: Int, indexPath: IndexPath) {
-//        print("min")
         if let itemQuantity = modelManager.productsCart[id] {
             modelManager.changeItemQuantity(key: id, number: itemQuantity - 1)
-            if modelManager.productsCart[id]! < 1 {
+            if modelManager.productsCart[id]! < 0 {
                 modelManager.productsCart.removeValue(forKey: id)
             }
         }

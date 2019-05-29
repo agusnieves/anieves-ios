@@ -11,7 +11,7 @@ import AlamofireObjectMapper
 class ApiModelManager{
     
     static let shared = ApiModelManager()
-    var token: String?
+    var token: String = "SNOW"
     let modelManager = ModelManager.shared
     
 
@@ -19,7 +19,6 @@ class ApiModelManager{
     
     private init(){
         AuthenticationManager.shared.authenticate { (authResponse) in
-            print(authResponse)
             self.token = authResponse.token
         }
     }
@@ -27,12 +26,13 @@ class ApiModelManager{
     func getAllProducts(completion: @escaping ([Product]?, Error?) -> Void) {
         let url = baseUrl + "/products"
         
-        Alamofire.request(url).validate().responseArray{ (response: DataResponse<[Product]>) in
+        Alamofire.request(url)
+            .validate()
+            .responseArray{ (response: DataResponse<[Product]>) in
             switch response.result {
             case .success:
-//                print(response.result.value)
-                ModelManager.shared.products = response.result.value ?? []
-                ModelManager.shared.fillProductsById(products: ModelManager.shared.products)
+                self.modelManager.products = response.result.value ?? []
+                self.modelManager.fillProductsById(products: self.modelManager.products)
                 completion(response.value, nil)
             case .failure(let error):
                 completion(nil, error)
@@ -44,10 +44,12 @@ class ApiModelManager{
     func getBanners(completion: @escaping ([Banner]?, Error?) -> Void) {
         let url = baseUrl + "/promoted"
         
-        Alamofire.request(url).validate().responseArray{ (response: DataResponse<[Banner]>) in
+        Alamofire.request(url)
+            .validate()
+            .responseArray{ (response: DataResponse<[Banner]>) in
             switch response.result {
             case .success:
-                ModelManager.shared.banners = response.result.value ?? []
+                self.modelManager.banners = response.result.value ?? []
                 completion(response.value, nil)
             case .failure(let error):
                 completion(nil, error)
@@ -56,8 +58,43 @@ class ApiModelManager{
         }
     }
     
-    func getAllPurchases(completion: @escaping ([Product]?, Error?) -> Void) {
+    func getAllPurchases(completion: @escaping ([Purchase]?, Error?) -> Void) {
+        let headers: HTTPHeaders = ["Authorization": "Bearer " + token]
         
+        Alamofire.request(baseUrl + "/purchases",method: .get, headers: headers)
+            .validate()
+            .responseArray{(response: DataResponse<[Purchase]>) in
+                switch response.result {
+                case .success:
+                    self.modelManager.purchases = response.result.value ?? []
+                    completion(response.value, nil)
+                case .failure(let error):
+                    completion(nil, error)
+                    print(error)
+                }
+        }
+    }
+    
+    func postPurchase(cart: [ProductInCart] , onCompletion: @escaping (Bool, String?) -> Void) {
+        let headers: HTTPHeaders = ["Authorization": "Bearer " + token]
+        
+        var params = Parameters()
+        params.updateValue(cart.toJSON(), forKey: "cart")
+        
+        Alamofire.request(baseUrl + "/checkout", method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+            .response { response in
+            guard let error = response.error else {
+                if response.response?.statusCode == 200 {
+                    onCompletion(true, nil)
+                } else {
+                    onCompletion(false, "Error posting the purchase")
+                }
+                return
+            }
+            print(error)
+            onCompletion(false, error.localizedDescription)
+            return
+        }
     }
     
 }

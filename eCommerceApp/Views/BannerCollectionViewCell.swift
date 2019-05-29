@@ -27,7 +27,7 @@ class BannerCollectionViewCell: UICollectionViewCell {
             bannerImage.kf.setImage(with: URL(string: imageUrl))
         }
         else {
-            // Set default image
+            bannerImage.image = #imageLiteral(resourceName: "noimage")
         }
     }
 }

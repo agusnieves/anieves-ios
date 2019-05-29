@@ -157,7 +157,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="365" height="141"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Banner-1" translatesAutoresizingMaskIntoConstraints="NO" id="AJl-tu-sBW">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Banner-1" translatesAutoresizingMaskIntoConstraints="NO" id="AJl-tu-sBW">
                                                     <rect key="frame" x="0.0" y="0.0" width="413" height="168"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Brazilian Bananas" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HdR-FJ-WwR">
@@ -220,7 +220,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="t6m-yt-Bwz">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="aaQ-H9-NgO">
+                        <barButtonItem key="leftBarButtonItem" title="History" id="aaQ-H9-NgO">
                             <connections>
                                 <action selector="goToPurchaseHistory:" destination="BYZ-38-t0r" id="cag-Bb-Ayu"/>
                                 <segue destination="yWE-3V-NXL" kind="show" identifier="goToPurchaseHistory" id="JaO-w9-eKh"/>
@@ -304,6 +304,11 @@
                                                 <constraint firstItem="Mwn-Tb-DNg" firstAttribute="top" secondItem="wgm-6G-Tw4" secondAttribute="topMargin" constant="10" id="mpd-eC-lQL"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="purchaseDate" destination="hHq-dX-yKJ" id="W7V-Jb-B7l"/>
+                                            <outlet property="purchaseId" destination="Mwn-Tb-DNg" id="qFB-uP-EEJ"/>
+                                            <outlet property="purchaseTotal" destination="ySM-ss-CRD" id="rYo-Vd-Hqj"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -322,10 +327,7 @@
                         <viewLayoutGuide key="safeArea" id="pbi-9y-Uf6"/>
                     </view>
                     <connections>
-                        <outlet property="purchaseDate" destination="hHq-dX-yKJ" id="YP5-sI-8Lc"/>
-                        <outlet property="purchaseId" destination="Mwn-Tb-DNg" id="WAP-EG-Zdb"/>
                         <outlet property="purchaseTableView" destination="INA-ZG-ZTy" id="sij-5p-76a"/>
-                        <outlet property="purchaseTotal" destination="ySM-ss-CRD" id="XnR-zy-mIt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XUP-sM-76j" userLabel="First Responder" sceneMemberID="firstResponder"/>

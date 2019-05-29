@@ -17,6 +17,7 @@ class CheckoutViewController: UIViewController {
     
     var modelManager = ModelManager.shared
     var product: [Product] = []
+    var productToPost: [ProductInCart] = []
     var total: Int = 0
     
     override func viewDidLoad() {
@@ -57,13 +58,29 @@ class CheckoutViewController: UIViewController {
             emptyCartMsj.text = "Your cart is empty"
             emptyCartMsj.isHidden = false
         }
+        if(!modelManager.isCheckout) {
+            checkoutButton.isHidden = true
+        }
     }
 
     func setUpCart() {
         self.checkoutButton.layer.cornerRadius = CGFloat(roundf(Float(self.checkoutButton.frame.size.height / 2.0)))
     }
     
+    func setProductsToPost() -> [ProductInCart]{
+        var productsInCart: [ProductInCart] = []
+        for (id, qty) in self.modelManager.productsCart {
+            productsInCart.append(ProductInCart(prodId: id, prodQty: qty))
+        }
+        return productsInCart
+    }
+    
     @IBAction func doCheckoutButton(_ sender: Any) {
+        productToPost = setProductsToPost()
+        
+        ApiModelManager.shared.postPurchase(cart: productToPost) { (response, error) in
+        }
+        
         let alertCheckoutDone = UIAlertController(title: "Purchase successful", message: "Come back with us", preferredStyle: .alert)
         alertCheckoutDone.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
             self.modelManager.productsCart = [:]

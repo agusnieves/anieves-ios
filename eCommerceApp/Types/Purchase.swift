@@ -12,7 +12,8 @@ import ObjectMapper
 class Purchase: NSObject, Mappable {
     
     var date: Date?
-    var products: [Product]?
+    var purchaseProduct: [PurchaseProduct]?
+    var total: Int = 0
     
     override init() {
         super.init()
@@ -23,7 +24,16 @@ class Purchase: NSObject, Mappable {
     }
     
     func mapping(map: Map) {
-        self.date <- map["date"]
-        self.products <- map["products"]
+        self.date <- (map["date"], CustomDateTransform())
+        self.purchaseProduct <- map["products"]
+        self.total = self.getTotal()
+    }
+    
+    func getTotal() -> Int {
+        var total = 0
+        for productSold in self.purchaseProduct! {
+            total += productSold.productSold!.price! + productSold.productQuantitySold!
+        }
+        return total
     }
 }

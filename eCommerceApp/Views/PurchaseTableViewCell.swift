@@ -10,6 +10,10 @@ import UIKit
 
 class PurchaseTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var purchaseId: UILabel!
+    @IBOutlet weak var purchaseDate: UILabel!
+    @IBOutlet weak var purchaseTotal: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -17,8 +21,16 @@ class PurchaseTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-}
-
-protocol PuchaseTableViewCellDelegate : class {
-    func purchaseTableViewCellDidTapViewDetails(id: Int, indexPath: IndexPath)
+    
+    func setPurchase(purchase: Purchase) {
+        self.purchaseId.text = "Purchase #" + String(Int.random(in: 1...10))
+        self.purchaseDate.text = formatDate(date: purchase.date!)
+        self.purchaseTotal.text = "$ " + String(purchase.total)
+    }
+    
+    func formatDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        return formatter.string(from: date)
+    }
 }
