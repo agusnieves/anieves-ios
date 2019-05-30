@@ -11,6 +11,7 @@ import UIKit
 class PurchaseHistoryViewController: UIViewController {
     @IBOutlet weak var purchaseTableView: UITableView!
     var purchases: [Purchase] = ModelManager.shared.purchases
+    var clickedCellIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,21 +23,13 @@ class PurchaseHistoryViewController: UIViewController {
         purchaseTableView.delegate = self
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        ModelManager.shared.isCheckout = false
-        ModelManager.shared.productsCart = setProductsToCart()
-    }
-    
     func setProductsToCart() -> [Int: Int]{
         var productsInPurchase: [Int:Int] = [:]
-        let purchase: Purchase = purchases[(purchaseTableView.indexPathForSelectedRow?.row)!]
+        let purchase: Purchase = purchases[clickedCellIndexPath?.row ?? 0]
         for product in purchase.purchaseProduct ?? [] {
             productsInPurchase[product.productSold!.id!] = product.productQuantitySold
         }
         return productsInPurchase
-    }
-    
-    @IBAction func viewPurchaseDetails(_ sender: Any) {
     }
 }
 
@@ -48,7 +41,20 @@ extension PurchaseHistoryViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "purchase", for: indexPath) as! PurchaseTableViewCell
-        cell.setPurchase(purchase: purchases[indexPath.row])
+        cell.indexPath = indexPath
+        cell.delegate = self
+        cell.setPurchase(purchase: purchases[indexPath.row], id: indexPath.row)
         return cell
     }
+}
+
+extension PurchaseHistoryViewController: PurchaseTableViewCellDelegate {
+    
+    func purchaseTableViewCellDidTapViewDetails(indexPath: IndexPath) {
+        ModelManager.shared.isCheckout = false
+        clickedCellIndexPath = indexPath
+        ModelManager.shared.productsCart = setProductsToCart()
+        self.performSegue(withIdentifier: "goToDetails", sender:  self)
+    }
+    
 }

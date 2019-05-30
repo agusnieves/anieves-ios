@@ -58,9 +58,8 @@ class ProductTableViewCell: UITableViewCell {
             self.productPrice.text = "$" + String(productPrice)
         }
         self.productId = product.id
-        if let prodQuantity = ModelManager.shared.productsCart[product.id!] {
-            self.productQuantity.text = String(prodQuantity)
-        } 
+        self.productQuantity.text = String(ModelManager.shared.productsCart[product.id!] ?? 0)
+         
     }
     
     @IBAction func productAddButtonAction(_ sender: UIButton) {

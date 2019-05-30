@@ -35,6 +35,11 @@ class ViewController: UIViewController {
             self.bannerCollectionView.reloadData()
         })
 
+        apiManager.getAllProducts { (products, error) in
+            self.setSections(products: products ?? [])
+            self.tableView.reloadData()
+        }
+        
         setUpBanners()
         setUpSearchBar()
         setUpTableView()
@@ -48,10 +53,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        apiManager.getAllProducts { (products, error) in
-            self.setSections(products: products ?? [])
-            self.tableView.reloadData()
-        }
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
@@ -129,7 +131,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate, ProductTab
     func productTableViewCellDidTapMinus(id: Int, indexPath: IndexPath) {
         if let itemQuantity = modelManager.productsCart[id] {
             modelManager.changeItemQuantity(key: id, number: itemQuantity - 1)
-            if modelManager.productsCart[id]! < 0 {
+            if let qty = modelManager.productsCart[id], qty < 1{
                 modelManager.productsCart.removeValue(forKey: id)
             }
         }

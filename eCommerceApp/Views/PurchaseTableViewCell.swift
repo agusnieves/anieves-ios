@@ -13,7 +13,9 @@ class PurchaseTableViewCell: UITableViewCell {
     @IBOutlet weak var purchaseId: UILabel!
     @IBOutlet weak var purchaseDate: UILabel!
     @IBOutlet weak var purchaseTotal: UILabel!
-    
+    weak var delegate: PurchaseTableViewCellDelegate?
+    var indexPath: IndexPath?
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -22,8 +24,8 @@ class PurchaseTableViewCell: UITableViewCell {
         super.layoutSubviews()
     }
     
-    func setPurchase(purchase: Purchase) {
-        self.purchaseId.text = "Purchase #" + String(Int.random(in: 1...10))
+    func setPurchase(purchase: Purchase, id: Int) {
+        self.purchaseId.text = "Purchase #" + String(id + 1)
         self.purchaseDate.text = formatDate(date: purchase.date!)
         self.purchaseTotal.text = "$ " + String(purchase.total)
     }
@@ -33,4 +35,16 @@ class PurchaseTableViewCell: UITableViewCell {
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
         return formatter.string(from: date)
     }
+    
+    @IBAction func viewDetailsButton(_ sender: UIButton) {
+        if let index = indexPath {
+            delegate?.purchaseTableViewCellDidTapViewDetails(indexPath: index)
+        } else {
+            print("No index path")
+        }
+    }
+}
+
+protocol PurchaseTableViewCellDelegate : class {
+    func purchaseTableViewCellDidTapViewDetails(indexPath: IndexPath)
 }

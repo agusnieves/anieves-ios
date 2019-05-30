@@ -13,7 +13,7 @@ class Purchase: NSObject, Mappable {
     
     var date: Date?
     var purchaseProduct: [PurchaseProduct]?
-    var total: Int = 0
+    var total: Int!
     
     override init() {
         super.init()
@@ -32,7 +32,7 @@ class Purchase: NSObject, Mappable {
     func getTotal() -> Int {
         var total = 0
         for productSold in self.purchaseProduct! {
-            total += productSold.productSold!.price! + productSold.productQuantitySold!
+            total = total + productSold.productSold!.price! * productSold.productQuantitySold!
         }
         return total
     }
